@@ -1,0 +1,100 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "content-video-generator"
+version = "1.0.0"
+description = "Use youtube videos and video files to generate content"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Reinaldo Martinez Mendes Leite"}
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+requires-python = ">=3.9"
+dependencies = [
+
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.11.11",
+]
+
+[project.scripts]
+content-video-generator = "main:app"
+
+[tool.ruff]
+# Define a versão do Python alvo (opcional, mas recomendado)
+target-version = "py39" # Exemplo: Python 3.12
+# Allow lines to be as long as 120.
+line-length = 120
+indent-width = 4
+
+# Configurações de Linting
+[tool.ruff.lint]
+# Seleciona as regras que você quer habilitar.
+# Veja a documentação do Ruff para a lista completa de códigos de regras.
+# Exemplo: Habilita as regras padrão do Flake8 (F), pycodestyle (E, W), isort (I)
+select = ["E", "F", "W", "I"]
+ignore = [] # Códigos de regras para ignorar
+task-tags = ["HACK", "TODO", "FIXME"]
+
+# Exclui arquivos/diretórios
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+# Configurações do Formatter (compatível com Black)
+[tool.ruff.format]
+# preview = true
+quote-style = "single" # Usa aspas duplas por padrão, como o Black
+line-ending = "auto" # Pode ser configurado se necessário
+
+[tool.ruff.analyze]
+detect-string-imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--verbose",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
