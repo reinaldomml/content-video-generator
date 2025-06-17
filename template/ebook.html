@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link href="ebook.css" rel="stylesheet">
+    <title>{{ ebook_title }}</title>
+    <meta name="description" content="{{ ebook_description or 'Ebook gerado automaticamente a partir de vídeo do YouTube' }}">
+</head>
+<body>
+    <!-- Página de capa - apenas imagem -->
+    <article class="cover-page">
+        <!-- Capa vazia - apenas imagem de fundo definida no CSS -->
+    </article>
+
+
+
+    <!-- Página de título -->
+    <article class="title-page">
+        <div class="title-content">
+            <h1>{{ ebook_title }}</h1>
+            {% if ebook_subtitle %}
+            <p class="subtitle">{{ ebook_subtitle }}</p>
+            {% endif %}
+            <p class="author">Por: {{ ebook_author }}</p>
+            {% if ebook_description %}
+            <div class="description-box">
+                <p class="description">{{ ebook_description }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </article>
+
+    <!-- Pontos principais -->
+    {% if key_points %}
+    <article class="key-points" id="key-points">
+        <header class="key-points-header">
+            <h2>Pontos Principais</h2>
+        </header>
+        <main class="key-points-content">
+            <div class="key-points-grid">
+                {% for point in key_points %}
+                <div class="key-point-card">
+                    <span class="point-number">{{ loop.index }}</span>
+                    <p>{{ point|markdown|safe }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </main>
+    </article>
+    {% endif %}
+
+    {% if chapters and chapters|length > 1 %}
+    <!-- Página do sumário -->
+    <article class="toc">
+        <h2>Sumário</h2>
+        <nav class="toc-nav">
+            <ul>
+                {% for chapter in chapters %}
+                <li>
+                    <a href="#chapter-{{ loop.index }}">
+                        <span class="chapter-number">{{ loop.index }}</span>
+                        <span class="chapter-title">{{ chapter.title }}</span>
+                        <span class="page-dots"></span>
+                    </a>
+                </li>
+                {% endfor %}
+                {% if conclusion %}
+                <li>
+                    <a href="#conclusion">
+                        <span class="chapter-number">{{ chapters|length + 1 }}</span>
+                        <span class="chapter-title">Conclusão</span>
+                        <span class="page-dots"></span>
+                    </a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    </article>
+    {% endif %}
+
+    <!-- Conteúdo principal -->
+    {% if chapters %}
+        {% for chapter in chapters %}
+        <article class="chapter" id="chapter-{{ loop.index }}">
+            <header class="chapter-header">
+                {% if chapters|length > 1 %}
+                <h2><span class="chapter-number">{{ loop.index }}</span>{{ chapter.title }}</h2>
+                {% else %}
+                <h2>{{ chapter.title }}</h2>
+                {% endif %}
+            </header>
+
+            <main class="chapter-content">
+                <!-- Conteúdo principal do capítulo -->
+                {% if chapter.content %}
+                <div class="chapter-text">
+                    {% for paragraph in chapter.content.split('\n\n') %}
+                    {% if paragraph.strip() %}
+                    <p>{{ paragraph.strip()|markdown|safe }}</p>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- Subseções do capítulo -->
+                {% if chapter.subsections %}
+                {% for subsection in chapter.subsections %}
+                <section class="subsection">
+                    <h3>{{ subsection.title }}</h3>
+                    <div class="subsection-content">
+                        {% for paragraph in subsection.content.split('\n\n') %}
+                        {% if paragraph.strip() %}
+                        <p>{{ paragraph.strip()|markdown|safe }}</p>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endfor %}
+                {% endif %}
+
+                <!-- Destaque de citação (se houver) -->
+                {% if chapter.highlight_quote %}
+                <blockquote class="highlight-quote">
+                    <p>"{{ chapter.highlight_quote|markdown|safe }}"</p>
+                </blockquote>
+                {% endif %}
+
+                <!-- Pontos importantes do capítulo (se houver) -->
+                {% if chapter.important_points %}
+                <div class="chapter-highlights">
+                    <h4>💡 Destaques importantes:</h4>
+                    <ul class="highlights-list">
+                        {% for point in chapter.important_points %}
+                        <li>{{ point|markdown|safe }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </main>
+        </article>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Conclusão -->
+    {% if conclusion %}
+    <article class="conclusion" id="conclusion">
+        <header class="conclusion-header">
+            <h2>Conclusão</h2>
+        </header>
+        <main class="conclusion-content">
+            {% for paragraph in conclusion.split('\n\n') %}
+            {% if paragraph.strip() %}
+            <p>{{ paragraph.strip()|markdown|safe }}</p>
+            {% endif %}
+            {% endfor %}
+        </main>
+    </article>
+    {% endif %}
+
+
+
+
+</body>
+</html>

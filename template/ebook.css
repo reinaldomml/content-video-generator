@@ -1,0 +1,596 @@
+/* ==========================================================================
+   WeasyPrint Ebook Template - Design Moderno e Profissional
+   ========================================================================== */
+
+/* Definição da fonte personalizada */
+@font-face {
+    font-family: 'OpenSans';
+    src: url('OpenSans-VariableFont_wdth,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-stretch: 75% 125%;
+    font-style: normal;
+}
+
+/* ==========================================================================
+   Configurações de Página
+   ========================================================================== */
+
+/* Página de capa - apenas imagem, sem margens */
+@page cover {
+    size: A4;
+    margin: 0;
+    background: url(cover.jpg) no-repeat center center;
+    background-size: cover;
+}
+
+/* Páginas normais com numeração no canto inferior direito */
+@page {
+    size: A4;
+    margin: 2.5cm 2cm 3cm 2cm;
+
+    @bottom-right {
+        content: counter(page);
+        font-family: 'OpenSans', 'Arial', sans-serif;
+        font-size: 11pt;
+        color: #7f8c8d;
+        font-weight: 500;
+        margin-bottom: 1cm;
+    }
+}
+
+
+
+/* Página de título sem numeração */
+@page title {
+    @bottom-right {
+        content: none;
+    }
+}
+
+/* Páginas de capítulo com numeração */
+@page chapter {
+    @bottom-right {
+        content: counter(page);
+        font-family: 'OpenSans', 'Arial', sans-serif;
+        font-size: 11pt;
+        color: #7f8c8d;
+        font-weight: 500;
+        margin-bottom: 1cm;
+    }
+}
+
+/* Páginas do sumário */
+@page toc {
+    @bottom-right {
+        content: counter(page);
+        font-family: 'OpenSans', 'Arial', sans-serif;
+        font-size: 11pt;
+        color: #7f8c8d;
+        font-weight: 500;
+        margin-bottom: 1cm;
+    }
+}
+
+/* ==========================================================================
+   Configurações Tipográficas Globais
+   ========================================================================== */
+
+html {
+    font-size: 11pt; /* Base para unidades rem */
+}
+
+body {
+    font-family: 'OpenSans', 'Georgia', serif;
+    font-size: 11pt;
+    line-height: 1.7;
+    color: #2c3e50;
+    margin: 0;
+    padding: 0;
+    text-align: justify;
+    hyphens: auto;
+    font-feature-settings: "liga" 1, "kern" 1;
+}
+
+/* Hierarquia tipográfica melhorada */
+h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #2c3e50;
+    margin: 0 0 1.5rem 0;
+}
+
+h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #2c3e50;
+    margin: 2rem 0 1rem 0;
+    page-break-after: avoid;
+}
+
+h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #34495e;
+    margin: 1.5rem 0 0.8rem 0;
+    page-break-after: avoid;
+}
+
+h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #34495e;
+    margin: 1.2rem 0 0.6rem 0;
+    page-break-after: avoid;
+}
+
+p {
+    margin: 0 0 1rem 0;
+    text-align: justify;
+    orphans: 3;
+    widows: 3;
+}
+
+/* Destaque para textos importantes */
+strong, b {
+    font-weight: 700;
+    color: #2c3e50;
+    background: rgba(52, 152, 219, 0.1);
+    padding: 0.1rem 0.2rem;
+    border-radius: 3px;
+}
+
+em, i {
+    font-style: italic;
+    color: #34495e;
+}
+
+/* Listas no conteúdo dos capítulos */
+.chapter-text ul, .subsection-content ul {
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+}
+
+.chapter-text li, .subsection-content li {
+    margin-bottom: 0.8rem;
+    line-height: 1.7;
+    text-align: justify;
+}
+
+/* Destaque para números e dados */
+.chapter-text .data-highlight, .subsection-content .data-highlight {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 5px;
+    padding: 0.2rem 0.5rem;
+    font-weight: 700;
+    color: #856404;
+}
+
+/* Links */
+a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   Página de Capa
+   ========================================================================== */
+
+.cover-page {
+    page: cover;
+    height: 100vh;
+    page-break-after: always;
+}
+
+
+
+/* ==========================================================================
+   Página de Título
+   ========================================================================== */
+
+.title-page {
+    page: title;
+    page-break-after: always;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+}
+
+.title-content {
+    text-align: center;
+    max-width: 85%;
+}
+
+.title-content h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.title-content .subtitle {
+    font-size: 1.3rem;
+    color: #7f8c8d;
+    font-style: italic;
+    margin-bottom: 2rem;
+    line-height: 1.4;
+}
+
+.title-content .author {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.description-box {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 4px solid #3498db;
+    margin: 2rem 0;
+}
+
+.description {
+    font-size: 1.1rem;
+    color: #34495e;
+    margin: 0;
+    line-height: 1.6;
+    text-align: left;
+}
+
+/* ==========================================================================
+   Sumário
+   ========================================================================== */
+
+.toc {
+    page: toc;
+    page-break-before: always;
+    page-break-after: always;
+}
+
+.toc h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 1rem;
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 1rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px dotted #bdc3c7;
+}
+
+.toc-nav a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #2c3e50;
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: #3498db;
+}
+
+.toc-nav .chapter-number {
+    font-weight: 700;
+    color: #3498db;
+    margin-right: 1rem;
+    min-width: 2.5rem;
+    font-size: 1.2rem;
+}
+
+.toc-nav .chapter-title {
+    flex: 1;
+    font-weight: 500;
+}
+
+.page-dots {
+    flex: 1;
+    border-bottom: 1px dotted #bdc3c7;
+    margin: 0 1rem;
+    height: 1px;
+}
+
+.toc-nav a::after {
+    content: target-counter(attr(href), page);
+    font-weight: 700;
+    color: #7f8c8d;
+    font-size: 1rem;
+}
+
+/* ==========================================================================
+   Capítulos
+   ========================================================================== */
+
+.chapter {
+    page: chapter;
+    page-break-before: always;
+    margin-bottom: 2rem;
+}
+
+.chapter-header {
+    margin-bottom: 2rem;
+    border-bottom: 3px solid #ecf0f1;
+    padding-bottom: 1rem;
+}
+
+.chapter-header h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.chapter-header .chapter-number {
+    background: #3498db;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    margin-right: 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    min-width: 3rem;
+    text-align: center;
+}
+
+.chapter-content {
+    margin-bottom: 2rem;
+}
+
+.chapter-text p {
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+    font-size: 1rem;
+    text-align: justify;
+}
+
+.chapter-text p:first-child {
+    margin-top: 0;
+}
+
+/* Subseções */
+.subsection {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #3498db;
+}
+
+.subsection h3 {
+    color: #2c3e50;
+    margin: 0 0 1rem 0;
+    font-size: 1.3rem;
+}
+
+.subsection-content p {
+    margin-bottom: 1.3rem;
+    line-height: 1.7;
+    text-align: justify;
+}
+
+/* Citações de destaque */
+.highlight-quote {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: 15px;
+    text-align: center;
+    font-style: italic;
+    position: relative;
+    page-break-inside: avoid;
+}
+
+.highlight-quote::before {
+    content: '"';
+    font-size: 4rem;
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+    opacity: 0.3;
+    font-family: serif;
+}
+
+.highlight-quote p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Destaques do capítulo */
+.chapter-highlights {
+    background: #fff3cd;
+    border: 2px solid #ffc107;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    page-break-inside: avoid;
+}
+
+.chapter-highlights h4 {
+    color: #856404;
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+}
+
+.highlights-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.highlights-list li {
+    padding: 0.5rem 0;
+    color: #856404;
+    font-weight: 500;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.highlights-list li::before {
+    content: '💡';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+}
+
+/* ==========================================================================
+   Conclusão
+   ========================================================================== */
+
+.conclusion {
+    page: chapter;
+    page-break-before: always;
+    margin-bottom: 2rem;
+}
+
+.conclusion-header {
+    margin-bottom: 2rem;
+    border-bottom: 3px solid #ecf0f1;
+    padding-bottom: 1rem;
+}
+
+.conclusion-header h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.conclusion-content p {
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+    font-size: 1rem;
+    text-align: justify;
+}
+
+/* ==========================================================================
+   Pontos Principais
+   ========================================================================== */
+
+.key-points {
+    page: chapter;
+    page-break-before: always;
+    margin-bottom: 2rem;
+}
+
+.key-points-header {
+    margin-bottom: 2rem;
+    border-bottom: 3px solid #ecf0f1;
+    padding-bottom: 1rem;
+}
+
+.key-points-header h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.key-points-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.key-point-card {
+    background: white;
+    border: 2px solid #3498db;
+    border-radius: 10px;
+    padding: 1.5rem;
+    position: relative;
+    page-break-inside: avoid;
+}
+
+.key-point-card .point-number {
+    position: absolute;
+    top: -1rem;
+    left: 1.5rem;
+    background: #3498db;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.key-point-card p {
+    margin: 1rem 0 0 0;
+    color: #2c3e50;
+    line-height: 1.6;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+
+
+/* ==========================================================================
+   Utilitários e Responsividade
+   ========================================================================== */
+
+.page-break {
+    page-break-before: always;
+}
+
+/* Evita quebras inadequadas */
+h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    orphans: 3;
+    widows: 3;
+}
+
+.chapter-highlights, .highlight-quote, .key-point-card {
+    page-break-inside: avoid;
+}
+
+/* ==========================================================================
+   Otimizações para Impressão
+   ========================================================================== */
+
+@media print {
+    body {
+        font-size: 10pt;
+        line-height: 1.6;
+    }
+
+    .chapter-highlights, .highlight-quote, .key-point-card {
+        page-break-inside: avoid;
+    }
+
+    .chapter-header, .conclusion-header, .key-points-header {
+        page-break-after: avoid;
+    }
+
+    .subsection {
+        page-break-inside: avoid;
+    }
+
+    .key-point-card {
+        margin-bottom: 1rem;
+    }
+}
